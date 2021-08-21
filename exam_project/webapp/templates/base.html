@@ -18,9 +18,9 @@
             <li class="ms-5"><a class="text-decoration-none" href="{% url 'adverts:unmoderated-list' %}">New Ads</a></li>
         {% endif %}
 
-                {% if user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                     <li class="ms-5"><a class="text-decoration-none" href="{% url 'adverts:create' %}">create new Ad</a></li>
-                    <li class="ms-5"><a class="text-decoration-none " href="#">profile {{ request.user }}</a></li>
+                    <li class="ms-5"><a class="text-decoration-none " href="{% url 'accounts:profile' request.user.id %}">profile {{ request.user }}</a></li>
                     <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">log out</a></li>
                 {% else %}
                     <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">log in</a></li>

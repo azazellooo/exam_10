@@ -18,7 +18,8 @@
 
                     <p class="card-text">{{ advert.description }}.</p>
                     {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
-                    <p class="card-text"><small class="text-muted">{{ advert.published_at }}</small></p>
+                    <p class="card-text text-secondary"><small class="text-muted">Published: {{ advert.published_at }}</small></p>
+                    <p class="card-text"><a href="{% url 'accounts:profile' advert.author.id %}" class="text-muted">Author: {{ advert.author }}</a></p>
                     {% if perms.webapp.can_view_new_ads and not advert.is_moderated %}
                     <div class="btn-group" id="{{ advert.id }}" role="group" aria-label="Basic mixed styles example">
                         <a class="btn btn-sm btn-outline-success"  onclick="approveAd(event)" href="#"> approve</a>
