@@ -1,9 +1,11 @@
 from datetime import date
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
+from webapp.forms import AdvertForm
 from webapp.models import Advert
 
 today = date.today()
@@ -43,13 +45,26 @@ class AdvertDetailView(DetailView):
         return super(AdvertDetailView, self).get(request, *args, **kwargs)
 
 
+class AdvertCreateView(LoginRequiredMixin, CreateView):
+    form_class = AdvertForm
+    model = Advert
+    template_name = 'advert/create.html'
+    success_url = reverse_lazy('adverts:moderated-list')
+
+    def form_valid(self, form):
+        advert = form.save(commit=False)
+        advert.author = self.request.user
+        advert.save()
+        return redirect(self.success_url)
+
+
 def approve_ad(request, *args, **kwargs):
     if request.is_ajax and request.method == "POST":
         ad = get_object_or_404(Advert, pk=list(dict(request.POST).keys())[0])
         ad.is_moderated = True
         ad.published_at = today
         ad.save()
-        return JsonResponse({'message': 'ad is succesfully moderated! :) '}, status=200)
+        return JsonResponse({'message': 'ad is successfully moderated! :) '}, status=200)
     return JsonResponse({"error": ""}, status=400, safe=False)
 
 
