@@ -2,8 +2,8 @@ from datetime import date
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from webapp.forms import AdvertForm
 from webapp.models import Advert
@@ -43,6 +43,25 @@ class AdvertDetailView(DetailView):
         if not request.user.has_perm('webapp.can_view_ads') and not object.is_moderated:
             return HttpResponse(request, 'you dont have permission', status=403)
         return super(AdvertDetailView, self).get(request, *args, **kwargs)
+
+
+class AdvertUpdateView(PermissionRequiredMixin, UpdateView):
+    model = Advert
+    form_class = AdvertForm
+    template_name = 'advert/update.html'
+    permission_required = 'webapp.change_advert'
+
+    def form_valid(self, form):
+        advert = form.save(commit=False)
+        advert.is_moderated = False
+        advert.save()
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('adverts:detail', kwargs={'pk': self.kwargs.get('pk')})
+
+    def has_permission(self):
+        return self.get_object().author == self.request.user or super().has_permission()
 
 
 class AdvertCreateView(LoginRequiredMixin, CreateView):
