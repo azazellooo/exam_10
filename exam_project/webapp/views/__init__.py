@@ -5,5 +5,6 @@ from webapp.views.advert import (
     approve_ad,
     reject_ad,
     AdvertCreateView,
-    AdvertUpdateView
+    AdvertUpdateView,
+    AdvertDeleteView
 )

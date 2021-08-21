@@ -3,12 +3,13 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.forms import AdvertForm
 from webapp.models import Advert
 
 today = date.today()
+
 
 class ModeratedAdvertListView(ListView):
     model = Advert
@@ -18,7 +19,7 @@ class ModeratedAdvertListView(ListView):
 
     def get_queryset(self):
         queryset = super(ModeratedAdvertListView, self).get_queryset()
-        return queryset.filter(is_moderated=True, is_rejected=False)
+        return queryset.filter(is_moderated=True, is_rejected=False).exclude(is_deleted=True)
 
 
 class UnModeratedAdvertListView(PermissionRequiredMixin, ListView):
@@ -73,6 +74,27 @@ class AdvertCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         advert = form.save(commit=False)
         advert.author = self.request.user
+        advert.save()
+        return redirect(self.success_url)
+
+
+class AdvertDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'webapp.delete_advert'
+    model = Advert
+    template_name = 'advert/delete.html'
+    context_object_name = 'advert'
+    success_url = reverse_lazy('adverts:moderated-list')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(is_deleted=False)
+
+    def has_permission(self):
+        return self.get_object().author == self.request.user or super().has_permission()
+
+    def delete(self, request, *args, **kwargs):
+        advert = self.get_object()
+        advert.is_deleted = True
         advert.save()
         return redirect(self.success_url)
 

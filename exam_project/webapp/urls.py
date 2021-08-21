@@ -7,7 +7,8 @@ from webapp.views import (
     approve_ad,
     reject_ad,
     AdvertCreateView,
-    AdvertUpdateView
+    AdvertUpdateView,
+    AdvertDeleteView
 )
 
 app_name = 'adverts'
@@ -18,6 +19,7 @@ urlpatterns = [
     path('unmoderated/', UnModeratedAdvertListView.as_view(), name='unmoderated-list'),
     path('<int:pk>/', AdvertDetailView.as_view(), name='detail'),
     path('<int:pk>/update', AdvertUpdateView.as_view(), name='update'),
+    path('<int:pk>/delete', AdvertDeleteView.as_view(), name='delete'),
     path('create/', AdvertCreateView.as_view(), name='create'),
     path('int:pk/approve/', approve_ad, name='approve'),
     path('int:pk/reject/', reject_ad, name='reject'),
