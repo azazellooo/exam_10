@@ -1,0 +1,17 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+    <div>
+    <div class="container" style="padding: 10%">
+    <h2 style="color: darkblue">Confirm deletion of your Ad "{{ advert.title }}": </h2>
+        <div class="alert " style="background-color: lavender">
+    <form action="{% url "adverts:delete" advert.id %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-outline-danger btn-m" type="submit" value="delete">
+    </form>
+        </div>
+    <h4><a href="{% url "adverts:detail" advert.id %}" class="btn btn-sm btn-outline-warning">Cancel</a></h4>
+    </div>
+    </div>
+
+{% endblock content %}
