@@ -7,7 +7,7 @@
                     </div>
                     <div class="col-md-8">
                     <div class="card-body">
-                    <h5 class="card-title">{{ advert.title }}</h5>
+                        <h5 class="card-title"><a href="{% url 'adverts:detail' advert.id %}">{{ advert.title }}</a></h5>
                     <p class="card-text">{{ advert.description }}.</p>
                     {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
                     <p class="card-text"><small class="text-muted">{{ advert.published_at }}</small></p>
