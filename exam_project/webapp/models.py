@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -11,7 +12,7 @@ class Advert(models.Model):
     title = models.CharField(max_length=300, null=False, blank=False)
     description = models.CharField(max_length=3000, null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
-    author = models.ForeignKey('accounts.Profile', on_delete=models.CASCADE, related_name='advert')
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='advert')
     is_moderated = models.BooleanField(default=False)
     is_rejected = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
