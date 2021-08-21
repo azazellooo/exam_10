@@ -19,6 +19,7 @@
         {% endif %}
 
                 {% if user.is_authenticated %}
+                    <li class="ms-5"><a class="text-decoration-none" href="{% url 'adverts:create' %}">create new Ad</a></li>
                     <li class="ms-5"><a class="text-decoration-none " href="#">profile {{ request.user }}</a></li>
                     <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">log out</a></li>
                 {% else %}
