@@ -2,7 +2,7 @@
 
 {% block content %}
  <div class="alert alert-secondary mt-5">
-<form method="post" action="{% url "adverts:create" %}">
+<form method="post" action="{% url 'adverts:create' %}" enctype="multipart/form-data">
     {% include "partial/form.html" %}
      <input class="btn btn-info" type="submit" value="create">
 </form>
