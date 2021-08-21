@@ -5,6 +5,9 @@ from django.db import models
 class Category(models.Model):
     category_name = models.CharField(max_length=300, null=False, blank=False)
 
+    def __str__(self):
+        return self.category_name
+
 
 class Advert(models.Model):
     category = models.ForeignKey('webapp.Category', on_delete=models.CASCADE, related_name='advert')
@@ -18,6 +21,7 @@ class Advert(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateField(null=True, blank=True)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         permissions = (("can_view_new_ads", "Can view new ads"),
