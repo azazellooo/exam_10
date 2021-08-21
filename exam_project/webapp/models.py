@@ -18,5 +18,9 @@ class Advert(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateField(null=True, blank=True)
 
+    class Meta:
+        permissions = (("can_view_new_ads", "Can view new ads"),
+                       ("can_view_rejected_ads", "Can view rejected ads"))
+
 
 # Create your models here.
