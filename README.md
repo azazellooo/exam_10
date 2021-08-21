@@ -1,4 +1,4 @@
-# django-hallo-app
+# Adverts and announcements
 
 Для запуска проекта установите python версии 3.7 и выше, pip и virualenv
 
