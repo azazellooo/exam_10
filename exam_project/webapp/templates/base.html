@@ -14,7 +14,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase text-light">
 
             <li class="ms-5"><a class="text-decoration-none" href="{% url 'adverts:moderated-list' %}">Ads</a></li>
-        {% if request.user.is_staff %}
+        {% if perms.webapp.can_view_new_ads %}
             <li class="ms-5"><a class="text-decoration-none" href="{% url 'adverts:unmoderated-list' %}">New Ads</a></li>
         {% endif %}
 

@@ -11,7 +11,7 @@
                     <p class="card-text">{{ advert.description }}.</p>
                     {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
                     <p class="card-text"><small class="text-muted">{{ advert.published_at }}</small></p>
-                    {% if request.user.is_staff and not advert.is_moderated %}
+                    {% if perms.webapp.can_view_new_ads and not advert.is_moderated %}
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <a class="btn btn-sm btn-outline-success" href="#"> approve</a>
                         <a class="btn btn-sm btn-outline-danger" href="#"> reject</a>
