@@ -41,13 +41,13 @@ class ModeratedAdvertListView(ListView):
 
     def get_queryset(self):
         queryset = super(ModeratedAdvertListView, self).get_queryset()
-        queryset.filter(is_moderated=True, is_rejected=False).exclude(is_deleted=True)
         if self.search_value:
                 queryset = queryset.filter(
                     Q(title__icontains=self.search_value) |
                     Q(description__icontains=self.search_value)
                 )
-        return queryset
+        return queryset.filter(is_moderated=True, is_rejected=False).exclude(is_deleted=True)
+
 
 
 class UnModeratedAdvertListView(PermissionRequiredMixin, ListView):
@@ -77,13 +77,12 @@ class UnModeratedAdvertListView(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super(UnModeratedAdvertListView, self).get_queryset()
-        queryset.filter(is_moderated=False, is_rejected=False)
         if self.search_value:
                 queryset = queryset.filter(
                     Q(title__icontains=self.search_value) |
                     Q(description__icontains=self.search_value)
                 )
-        return queryset
+        return queryset.filter(is_moderated=False, is_rejected=False)
 
 
 class AdvertDetailView(DetailView):
