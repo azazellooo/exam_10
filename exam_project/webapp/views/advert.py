@@ -52,4 +52,13 @@ def approve_ad(request, *args, **kwargs):
         return JsonResponse({'message': 'ad is succesfully moderated! :) '}, status=200)
     return JsonResponse({"error": ""}, status=400, safe=False)
 
+
+def reject_ad(request, *args, **kwargs):
+    if request.is_ajax and request.method == "POST":
+        ad = get_object_or_404(Advert, pk=list(dict(request.POST).keys())[0])
+        ad.is_rejected = True
+        ad.save()
+        return JsonResponse({'message': f'ad "{ad.title}" is rejected! '}, status=200)
+    return JsonResponse({"error": ""}, status=400, safe=False)
+
     # Create your views here.
