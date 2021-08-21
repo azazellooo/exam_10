@@ -18,6 +18,8 @@ class ModeratedAdvertListView(ListView):
     template_name = 'advert/main_list.html'
     context_object_name = 'adverts'
     ordering = '-published_at'
+    paginate_by = 5
+    paginate_orphans = 1
 
     def get_search_value(self):
         if self.form.is_valid():
