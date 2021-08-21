@@ -1,11 +1,13 @@
 from datetime import date
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
+from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from webapp.forms import AdvertForm
+from webapp.forms import AdvertForm, SearchForm
 from webapp.models import Advert
 
 today = date.today()
@@ -17,9 +19,33 @@ class ModeratedAdvertListView(ListView):
     context_object_name = 'adverts'
     ordering = '-published_at'
 
+    def get_search_value(self):
+        if self.form.is_valid():
+            return self.form.cleaned_data['search_value']
+        return None
+
+    def get(self, request, **kwargs):
+        self.form = SearchForm(request.GET)
+        self.search_value = self.get_search_value()
+        return super().get(request, **kwargs)
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['search_form'] = self.form
+
+        if self.search_value:
+            context['query'] = urlencode({'search_value': self.search_value})
+        return context
+
     def get_queryset(self):
         queryset = super(ModeratedAdvertListView, self).get_queryset()
-        return queryset.filter(is_moderated=True, is_rejected=False).exclude(is_deleted=True)
+        queryset.filter(is_moderated=True, is_rejected=False).exclude(is_deleted=True)
+        if self.search_value:
+                queryset = queryset.filter(
+                    Q(title__icontains=self.search_value) |
+                    Q(description__icontains=self.search_value)
+                )
+        return queryset
 
 
 class UnModeratedAdvertListView(PermissionRequiredMixin, ListView):
@@ -29,9 +55,33 @@ class UnModeratedAdvertListView(PermissionRequiredMixin, ListView):
     ordering = 'created_at'
     permission_required = 'webapp.can_view_new_ads'
 
+    def get_search_value(self):
+        if self.form.is_valid():
+            return self.form.cleaned_data['search_value']
+        return None
+
+    def get(self, request, **kwargs):
+        self.form = SearchForm(request.GET)
+        self.search_value = self.get_search_value()
+        return super().get(request, **kwargs)
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['search_form'] = self.form
+
+        if self.search_value:
+            context['query'] = urlencode({'search_value': self.search_value})
+        return context
+
     def get_queryset(self):
         queryset = super(UnModeratedAdvertListView, self).get_queryset()
-        return queryset.filter(is_moderated=False, is_rejected=False)
+        queryset.filter(is_moderated=False, is_rejected=False)
+        if self.search_value:
+                queryset = queryset.filter(
+                    Q(title__icontains=self.search_value) |
+                    Q(description__icontains=self.search_value)
+                )
+        return queryset
 
 
 class AdvertDetailView(DetailView):
