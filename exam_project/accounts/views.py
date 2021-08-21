@@ -23,7 +23,7 @@ class UserDetailView(DetailView, MultipleObjectMixin):
         context = super(UserDetailView, self).get_context_data(**kwargs)
         page_owner = self.get_object()
         if self.request.user != page_owner:
-            context['adverts'] = page_owner.advert.filter(is_moderated=True)
+            context['adverts'] = page_owner.advert.filter(is_moderated=True).exclude(is_deleted=True)
             return context
         context['adverts'] = page_owner.advert.all()
         return context
