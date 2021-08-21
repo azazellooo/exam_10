@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Update {{ profile }}'s phone number</h2>
+ <div class="alert alert-secondary mt-5">
+<form method="post" action="{% url "accounts:update" profile.id %}">
+    {% include "partial/form.html" %}
+     <input class="btn btn-info" type="submit" value="update">
+</form>
+
+ </div>
+{% endblock content %}
