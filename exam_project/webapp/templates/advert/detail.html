@@ -6,7 +6,9 @@
  <img style="height: 100px; width: auto" src="{% if advert.picture %}{{ advert.picture.url }}{% else %}https://www.allianceplast.com/wp-content/uploads/no-image.png{% endif %}" class="rounded-start" alt="...">
 <p>{{ advert.description }}</p>
 {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
-
+{% if perms.webapp.change_advert or advert.author == request.user %}
+<a class="btn-sm btn-outline-warning" href="{% url 'adverts:update' advert.id %}">edit</a>
+{% endif %}
 
  </div>
 {% endblock content %}
