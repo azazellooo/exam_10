@@ -4,6 +4,9 @@
 
     <div class="card border-warning w-100 mt-5 mb-3" style="max-width: 18rem;">
         <div class="card-header bg-transparent ">Profile {{ user_obj }}</div>
+    {% if perms.change_profile or request.user == user_obj %}
+        <a class="btn-sm btn btn-outline-warning mt-3" href="{% url 'accounts:update' user_obj.profile.id %}">update</a>
+    {% endif %}
     </div>
 <h2>{{ user_obj }}'s Ads/announcements: </h2>
     {% include 'partial/advert_list.html' %}
