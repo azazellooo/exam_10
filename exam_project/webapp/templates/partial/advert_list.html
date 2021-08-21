@@ -13,7 +13,7 @@
                     <p class="card-text"><small class="text-muted">{{ advert.published_at }}</small></p>
                     {% if perms.webapp.can_view_new_ads and not advert.is_moderated %}
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a class="btn btn-sm btn-outline-success" href="#"> approve</a>
+                        <a class="btn btn-sm btn-outline-success" id="{{ advert.id }}" onclick="approveAd(event)" href="#"> approve</a>
                         <a class="btn btn-sm btn-outline-danger" href="#"> reject</a>
                     </div>
                     {% endif %}
@@ -25,3 +25,48 @@
     {% else %}
         <h4>There are no adverts yet(</h4>
     {% endif %}
+
+        <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    });
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    let approveAd = function (e){
+        e.preventDefault();
+        console.log(e.target.id)
+
+
+        $.ajax({
+            url: '{% url "adverts:approve"  %}',
+            type: 'post',
+            data: e.target.id,
+            success: function(response) {
+                console.log(response)
+                alert(response['message'])
+
+            },
+            failure: function(response) {
+                console.log(response)
+                alert('ERROR');
+            }
+        });
+    }
+
+
+        </script>
