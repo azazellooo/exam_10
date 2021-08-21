@@ -13,13 +13,13 @@
     <nav class="navbar navbar-expand-lg bg-info text-white">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase text-light">
 
-            <li class="ms-5"><a class="text-decoration-none" href="#">Все </a></li>
+            <li class="ms-5"><a class="text-decoration-none" href="{% url 'adverts:moderated-list' %}">Ads</a></li>
 
                 {% if user.is_authenticated %}
-                    <li class="ms-5"><a class="text-decoration-none " href="#">профиль {{ request.user }}</a></li>
-                    <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Выйти</a></li>
+                    <li class="ms-5"><a class="text-decoration-none " href="#">profile {{ request.user }}</a></li>
+                    <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">log in</a></li>
                 {% else %}
-                    <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Войти</a></li>
+                    <li class="ms-3"><a class="text-decoration-none" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">log our</a></li>
                 {% endif %}
         </ul>
     </nav>
