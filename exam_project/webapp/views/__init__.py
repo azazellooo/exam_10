@@ -1,1 +1,1 @@
-from webapp.views.advert import ModeratedAdvertListView, UnModeratedAdvertListView
+from webapp.views.advert import ModeratedAdvertListView, UnModeratedAdvertListView, AdvertDetailView
