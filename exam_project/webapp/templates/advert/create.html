@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <div class="alert alert-secondary mt-5">
+<form method="post" action="{% url "adverts:create" %}">
+    {% include "partial/form.html" %}
+     <input class="btn btn-info" type="submit" value="create">
+</form>
+
+ </div>
+{% endblock content %}
