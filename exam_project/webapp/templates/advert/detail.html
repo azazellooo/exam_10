@@ -10,5 +10,9 @@
 <a class="btn-sm btn-outline-warning" href="{% url 'adverts:update' advert.id %}">edit</a>
 {% endif %}
 
+ {% if perms.webapp.delete_advert or advert.author == request.user %}
+<a class="btn-sm btn btn-outline-danger mt-3" href="{% url 'adverts:delete' advert.id %}">delete</a>
+{% endif %}
+
  </div>
 {% endblock content %}

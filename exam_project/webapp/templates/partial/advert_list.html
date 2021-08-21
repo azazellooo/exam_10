@@ -11,6 +11,11 @@
                     {% if perms.webapp.change_advert or advert.author == request.user %}
                     <a class="btn-sm btn-outline-warning" href="{% url 'adverts:update' advert.id %}">edit</a>
                     {% endif %}
+
+                    {% if perms.webapp.delete_advert or advert.author == request.user %}
+                    <a class="btn-sm btn btn-outline-danger mt-3" href="{% url 'adverts:delete' advert.id %}">delete</a>
+                    {% endif %}
+
                     <p class="card-text">{{ advert.description }}.</p>
                     {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
                     <p class="card-text"><small class="text-muted">{{ advert.published_at }}</small></p>
