@@ -18,6 +18,7 @@
 
                     <p class="card-text">{{ advert.description }}.</p>
                     {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
+                    {% if advert.author.profile.phone_number %}Contacts: {{ advert.author.profile.phone_number }}{% endif %}
                     <p class="card-text text-secondary"><small class="text-muted">Published: {{ advert.published_at }}</small></p>
                     <p class="card-text"><a href="{% url 'accounts:profile' advert.author.id %}" class="text-muted">Author: {{ advert.author }}</a></p>
                     {% if perms.webapp.can_view_new_ads and not advert.is_moderated %}
