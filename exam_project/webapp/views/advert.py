@@ -1,9 +1,12 @@
+from datetime import date
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from webapp.models import Advert
 
+today = date.today()
 
 class ModeratedAdvertListView(ListView):
     model = Advert
@@ -38,3 +41,15 @@ class AdvertDetailView(DetailView):
         if not request.user.has_perm('webapp.can_view_ads') and not object.is_moderated:
             return HttpResponse(request, 'you dont have permission', status=403)
         return super(AdvertDetailView, self).get(request, *args, **kwargs)
+
+
+def approve_ad(request, *args, **kwargs):
+    if request.is_ajax and request.method == "POST":
+        ad = get_object_or_404(Advert, pk=list(dict(request.POST).keys())[0])
+        ad.is_moderated = True
+        ad.published_at = today
+        ad.save()
+        return JsonResponse({'message': 'ad is succesfully moderated! :) '}, status=200)
+    return JsonResponse({"error": ""}, status=400, safe=False)
+
+    # Create your views here.
