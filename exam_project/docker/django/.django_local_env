@@ -1,0 +1,11 @@
+DEBUG=1
+SECRET_KEY=*5%v01n%!h=55+c4($jdz(qwq+g)^^g&2&sg1ir=3k4$(*d44b
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SQL_ENGINE=django.db.backends.postgresql_psycopg2
+SQL_DATABASE=mydatabase
+SQL_USER=admin
+SQL_PASSWORD=admin
+SQL_HOST=host.docker.internal:5431
+SQL_PORT=5431
+DATABASE_URL=postgres://admin:admin@localhost:5431/mydatabase
+

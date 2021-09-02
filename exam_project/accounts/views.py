@@ -11,7 +11,7 @@ from accounts.models import Profile
 class UserDetailView(DetailView, MultipleObjectMixin):
     model = get_user_model()
     template_name = 'profile.html'
-    paginate_by = 5
+    paginate_by = 3
     paginate_orphans = 1
     context_object_name = 'user_obj'
 
@@ -22,8 +22,9 @@ class UserDetailView(DetailView, MultipleObjectMixin):
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
         page_owner = self.get_object()
+        print(page_owner)
         if self.request.user != page_owner:
-            context['adverts'] = page_owner.advert.filter(is_moderated=True)
+            context['adverts'] = page_owner.advert.filter(is_moderated=True).exclude(is_deleted=True)
             return context
         context['adverts'] = page_owner.advert.exclude(is_deleted=True)
         return context
