@@ -1,18 +1,70 @@
 {% extends 'base.html' %}
 
+{#{% block content %}#}
+{# <div class="alert alert-secondary mt-5 text-center">#}
+{# <h1>{{ advert.title }}</h1>#}
+{# <img style="height: 100px; width: auto" src="{% if advert.picture %}{{ advert.picture.url }}{% else %}https://www.allianceplast.com/wp-content/uploads/no-image.png{% endif %}" class="rounded-start" alt="...">#}
+{#<p>{{ advert.description }}</p>#}
+{#{% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}#}
+{#{% if perms.webapp.change_advert or advert.author == request.user %}#}
+{#<a class="btn-sm btn-outline-warning" href="{% url 'adverts:update' advert.id %}">edit</a>#}
+{#{% endif %}#}
+{##}
+{# {% if perms.webapp.delete_advert or advert.author == request.user %}#}
+{#<a class="btn-sm btn btn-outline-danger mt-3" href="{% url 'adverts:delete' advert.id %}">delete</a>#}
+{#{% endif %}#}
+{##}
+{# </div>#}
+{#{% endblock content %}#}
+
+
 {% block content %}
- <div class="alert alert-secondary mt-5 text-center">
- <h1>{{ advert.title }}</h1>
- <img style="height: 100px; width: auto" src="{% if advert.picture %}{{ advert.picture.url }}{% else %}https://www.allianceplast.com/wp-content/uploads/no-image.png{% endif %}" class="rounded-start" alt="...">
-<p>{{ advert.description }}</p>
-{% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
-{% if perms.webapp.change_advert or advert.author == request.user %}
-<a class="btn-sm btn-outline-warning" href="{% url 'adverts:update' advert.id %}">edit</a>
-{% endif %}
+    <div >
+    <div class="row ad-detail">
+        <div class="col-md-4 col-sm-12">
+            <img style="height: 200px; width: auto" src="{% if advert.picture %}{{ advert.picture.url }}{% else %}https://www.allianceplast.com/wp-content/uploads/no-image.png{% endif %}" class="rounded-start" alt="...">
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <div class="ad-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title mb-0">{{ advert.title }}</h5>
+                        <div>
+                            {% if perms.webapp.change_advert or advert.author == request.user %}
+                            <a class="edit-icon" href="{% url 'adverts:update' advert.id %}"><i class="far fa-edit"></i></a>
+                            {% endif %}
 
- {% if perms.webapp.delete_advert or advert.author == request.user %}
-<a class="btn-sm btn btn-outline-danger mt-3" href="{% url 'adverts:delete' advert.id %}">delete</a>
-{% endif %}
+                            {% if perms.webapp.delete_advert or advert.author == request.user %}
+                            <a class="mx-2 delete-icon" href="{% url 'adverts:delete' advert.id %}"><i class="far fa-trash-alt"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if advert.published_at %}
+                    <p class="mt-0 text-secondary"><small class="text-muted">Published on {{ advert.published_at }}</small></p>{% endif %}
+                    <p class="text-muted">By <a href="{% url 'accounts:profile' advert.author.id %}" class="text-muted">{{ advert.author }}</a></p>
 
- </div>
+
+                    {% if advert.description %}
+                    <p class="my-1">{{ advert.description }} </p>
+                    {% else %}
+                        <p>No description</p>
+                    {% endif %}
+                    <p class="my-1 ad-price"><i class="fas fa-dollar-sign"></i> {% if advert.price %}{{ advert.price }}{% else %}contract price{% endif %}</p>
+                    {% if advert.author.profile.phone_number %}
+                        <button class="ad-phone" onclick="copyPhoneNumber({{ advert.author.profile.phone_number }})"><i class="fas fa-phone-alt text-secondary"></i></button>
+                        {{ advert.author.profile.phone_number }}
+                    {% endif %}
+
+                    {% if perms.webapp.can_view_new_ads and not advert.is_moderated %}
+                    <div class="btn-group position-absolute bottom-0 end-0" id="{{ advert.id }}" role="group" aria-label="Basic mixed styles example">
+                        <a class="approve-btn"  onclick="approveAd(event)" href="#"><i class="fas fa-check"></i> approve</a>
+                        <a class="mx-2 reject-btn" onclick="rejectAd(event)" href="#"><i class="fas fa-times"></i> reject</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
 {% endblock content %}

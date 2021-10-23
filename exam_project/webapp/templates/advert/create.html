@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
- <div class="alert alert-secondary mt-5">
-<form method="post" action="{% url 'adverts:create' %}" enctype="multipart/form-data">
+ <div class="ad-detail d-flex justify-content-center w-50" style="background-image: linear-gradient(to right top, #051937, #123b63, #196290, #188cbe, #12b9eb);">
+<form method="post" class="text-light w-50" action="{% url 'adverts:create' %}" enctype="multipart/form-data">
     {% include "partial/form.html" %}
-     <input class="btn btn-info" type="submit" value="create">
+    <div class="d-flex justify-content-center">
+        <button class="btn create-btn" type="submit" value="create"><i class="mb-0 far fa-plus-square"></i> create</button>
+    </div>
 </form>
 
  </div>

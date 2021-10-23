@@ -1,30 +1,46 @@
+<div class="">
 {% if adverts %}
     {% for advert in adverts %}
-        <div class="mt-3 card mb-3" style="max-width: 540px;">
+        <div class="ad my-3 card">
             <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{% if advert.picture %}{{ advert.picture.url }}{% else %}https://www.allianceplast.com/wp-content/uploads/no-image.png{% endif %}" class="img-fluid rounded-start" alt="...">
+                <div class="col-md-4 ">
+                    <img src="{% if advert.picture %}{{ advert.picture.url }}{% else %}https://www.allianceplast.com/wp-content/uploads/no-image.png{% endif %}" class="ad-img rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title"><a href="{% url 'adverts:detail' advert.id %}">{{ advert.title }}</a></h5>
-                    {% if perms.webapp.change_advert or advert.author == request.user %}
-                    <a class="btn-sm btn-outline-warning" href="{% url 'adverts:update' advert.id %}">edit</a>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-title mb-0"><a class="ad-title" href="{% url 'adverts:detail' advert.id %}">{{ advert.title }}</a></h5>
+                        <div>
+                            {% if perms.webapp.change_advert or advert.author == request.user %}
+                            <a class="edit-icon" href="{% url 'adverts:update' advert.id %}"><i class="far fa-edit"></i></a>
+                            {% endif %}
+
+                            {% if perms.webapp.delete_advert or advert.author == request.user %}
+                            <a class="mx-2 delete-icon" href="{% url 'adverts:delete' advert.id %}"><i class="far fa-trash-alt"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if advert.published_at %}
+                    <p class="mt-0 text-secondary"><small class="text-muted">Published on {{ advert.published_at }}</small></p>{% endif %}
+                    {% if advert.is_rejected %}<p class="text-danger" style="font-size: 16px">This ad is rejected. Probably it contains forbidden content, edit it and try post again. </p>{% endif %}
+                    {% if not advert.is_moderated %}<p class="text-secondary" style="font-size: 13px"><i class="far fa-clock"></i> on moderation...</p>{% endif %}
+                    <p class="text-muted">By <a href="{% url 'accounts:profile' advert.author.id %}" class="text-muted">{{ advert.author }}</a></p>
+
+                    {% if advert.description %}
+                    <p class="my-1">{{ advert.description|truncatechars:50 }} <a href="{% url 'adverts:detail' advert.id %}" class="ad-more">read more</a></p>
+                    {% else %}
+                        <p>No description</p>
+                    {% endif %}
+                    <p class="my-1 ad-price"><i class="fas fa-dollar-sign"></i> {% if advert.price %}{{ advert.price }}{% else %}contract price{% endif %}</p>
+                    {% if advert.author.profile.phone_number %}
+                        <button class="ad-phone" onclick="copyPhoneNumber({{ advert.author.profile.phone_number }})"><i class="fas fa-phone-alt text-secondary"></i></button>
+                        {{ advert.author.profile.phone_number }}
                     {% endif %}
 
-                    {% if perms.webapp.delete_advert or advert.author == request.user %}
-                    <a class="btn-sm btn btn-outline-danger mt-3" href="{% url 'adverts:delete' advert.id %}">delete</a>
-                    {% endif %}
-
-                    <p class="card-text">{{ advert.description }}.</p>
-                    {% if advert.price %}<p>Price: {{ advert.price }}</p>{% endif %}
-                    {% if advert.author.profile.phone_number %}Contacts: {{ advert.author.profile.phone_number }}{% endif %}
-                    <p class="card-text text-secondary"><small class="text-muted">Published: {{ advert.published_at }}</small></p>
-                    <p class="card-text"><a href="{% url 'accounts:profile' advert.author.id %}" class="text-muted">Author: {{ advert.author }}</a></p>
                     {% if perms.webapp.can_view_new_ads and not advert.is_moderated %}
-                    <div class="btn-group" id="{{ advert.id }}" role="group" aria-label="Basic mixed styles example">
-                        <a class="btn btn-sm btn-outline-success"  onclick="approveAd(event)" href="#"> approve</a>
-                        <a class="btn btn-sm btn-outline-danger" onclick="rejectAd(event)" href="#"> reject</a>
+                    <div class="btn-group position-absolute bottom-0 end-0" id="{{ advert.id }}" role="group" aria-label="Basic mixed styles example">
+                        <a class="approve-btn"  onclick="approveAd(event)" href="#"><i class="fas fa-check"></i> approve</a>
+                        <a class="mx-2 reject-btn" onclick="rejectAd(event)" href="#"><i class="fas fa-times"></i> reject</a>
                     </div>
                     {% endif %}
                 </div>
@@ -35,7 +51,7 @@
     {% else %}
         <h4>There are no adverts yet(</h4>
     {% endif %}
-
+</div>
         <script>
     $.ajaxSetup({
         headers: {

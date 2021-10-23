@@ -1,32 +1,31 @@
 <div class="d-flex justify-content-center ">
-<ul class="pagination justify-content-center pagination-sm">
+<ul class="pagination justify-content-center pagination-sm update-profile">
         {% if page_obj.has_previous %}
             <li class="page-item d-flex" >
-            <a class="page-link" style="color: grey" href="?{% if query %}{{ query }}&{% endif %}page=1" tabindex="-1">&laquo; start</a>
-            <a class="page-link" style="color: grey" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">prev</a>
+            <a class="paginate-btn paginate-left" href="?{% if query %}{{ query }}&{% endif %}page=1" tabindex="-1">&laquo; start</a>
+            <a class="paginate-btn"  href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">prev</a>
             </li>
         {% else %}
             <li class="page-item disabled d-flex">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Start</a>
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">End</a>
+            <a class="paginate-btn paginate-left" href="#" tabindex="-1" aria-disabled="true">Start</a>
+            <a class="paginate-btn" href="#" tabindex="-1" aria-disabled="true">End</a>
             <li>
         {% endif %}
     <li>
-        <form method="get">
+        <form style="width: 60px;" method="get">
             {% if search_value %}<input type="hidden" name="search" value="{{ search_value }}">{% endif %}
-            page <input type="text" name="page" id="page" value="{{ page_obj.number }}">
-            /{{ page_obj.paginator.num_pages }}.
+             <input class="paginate-input" placeholder="page" type="text" name="page" id="page" value="{{ page_obj.number }}">
         </form>
     </li>
         {% if page_obj.has_next %}
             <li class="page-item d-flex">
-            <a class="page-link" style="color: grey" href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">next</a>
-            <a class="page-link" style="color: grey" href="?{% if query %}{{ query }}&{% endif %}page={{ paginator.num_pages }}">end &raquo;</a>
+            <a class="paginate-btn"  href="?{% if query %}{{ query }}&{% endif %}page={{ page_obj.next_page_number }}">next</a>
+            <a class="paginate-btn paginate-right" href="?{% if query %}{{ query }}&{% endif %}page={{ paginator.num_pages }}">end &raquo;</a>
             </li>
         {% else %}
             <li class="page-item disabled d-flex">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">next</a>
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">end &raquo;</a>
+            <a class="paginate-btn" href="#" tabindex="-1" aria-disabled="true">next</a>
+            <a class="paginate-btn paginate-right" href="#" tabindex="-1" aria-disabled="true">end &raquo;</a>
             </li>
         {% endif %}
 </ul>

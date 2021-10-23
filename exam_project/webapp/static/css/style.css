@@ -1,0 +1,245 @@
+
+.global-body{
+    background-image: linear-gradient(to right top, #98b9f2, #94b6f0, #91b2ee, #8dafec, #8aacea, #80b2f0, #75b9f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+}
+
+.ad-img{
+    height: auto;
+    width: 100%;
+}
+
+.edit-icon{
+    text-decoration: none;
+    color: #c49508;
+}
+
+.delete-icon{
+    text-decoration: none;
+    color: #c20e0e
+}
+
+.ad-title{
+    text-decoration: none;
+    color: #5A5F7A;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.ad-price{
+    color: #007647;
+    font-weight: bold;
+}
+
+.ad-more{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    color: #91b2ee;
+}
+
+.ad-phone{
+    background-color: transparent;
+    border: none;
+}
+
+.approve-btn{
+    color: #007647;
+    text-decoration: none;
+}
+.reject-btn{
+    color: #9e0202;
+    text-decoration: none;
+}
+.ad{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navbar-bg{
+    background-image: linear-gradient(to right top, #141b41, #141c45, #141c48, #141d4c, #141d50, #141d50, #141d50, #141d50, #141d4c, #141c48, #141c45, #141b41);
+    background-repeat: no-repeat;
+}
+.search{
+    display: flex;
+    }
+
+
+.search-input {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    margin: 0;
+    border: solid aliceblue 2px;
+
+}
+
+.search-input:focus{
+  color: #5A5F7A;
+    background-color: aliceblue;
+
+}
+
+.searchButton {
+    height: 40px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-top: 0;
+    border-color: transparent;
+    font-weight: lighter;
+    color: #5A5F7A;
+}
+
+.searchButton:hover{
+    color: darkslategray;
+}
+
+.paginate-input{
+    border: solid aliceblue 2px;
+    background-color: transparent;
+    border-right: none;
+    border-left: none;
+    width: inherit;
+    text-align: center;
+}
+
+.paginate-input:focus{
+    background-color: #141B41;
+    color: aliceblue;
+    border: none;}
+.paginate-btn{
+    border: solid aliceblue 2px;
+    padding-inline: 5px;
+    text-decoration: none;
+    color: #141B41;
+}
+
+.paginate-btn:hover{
+    background-color: #141B41;
+    color: aliceblue;
+    border: none;
+}
+.paginate-left{
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-right-color: transparent;
+}
+.paginate-right{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-left: none;
+}
+.ad-detail{
+    margin-top: 200px;
+    margin-bottom: 300px;
+    background-color: aliceblue;
+    padding: 60px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+.ad-info{
+    margin: 30px;
+    padding: 20px;
+    background-image: linear-gradient(to right top, #c7d0ff, #ccd0f7, #cfd1ee, #d2d1e6, #d3d2de, #d4d3db, #d4d3d7, #d4d4d4, #d4d4d4, #d4d4d4, #d4d4d4, #d4d4d4);
+}
+
+
+.footer-basic {
+  padding:40px 0;
+  background-color:#141B41;
+  color: aliceblue;
+}
+
+.footer-basic ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer-basic li {
+  padding:0 10px;
+}
+
+.footer-basic ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity:1;
+}
+
+.footer-basic .social {
+  text-align:center;
+  padding-bottom:25px;
+}
+
+.footer-basic .social > a {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  border:1px solid #ccc;
+  margin:0 8px;
+  color:inherit;
+  opacity:0.75;
+}
+
+.footer-basic .social > a:hover {
+  opacity:0.9;
+}
+
+.footer-basic .copyright {
+  margin-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:0;
+}
+
+.update-profile{
+    margin-bottom: 300px;
+}
+
+.cancel{
+    margin-top: 100px;
+    text-decoration: none;
+    color: #141B41;
+}
+.labels{
+    background-color: gainsboro;
+    border-radius: 3px;
+    color: darkslategray;
+    font-weight: bold;
+}
+
+.update-btn{
+    background-color: #424866;
+    color: aliceblue;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+}
+
+.update-btn:hover{
+    background-color: #ccd0f7;
+    color: #141d50;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+.create-btn{
+    width: 100%;
+    background-color: #E8C501;
+    color: #141d50;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+}
+
+.create-btn:hover{
+    background-color: #ccd0f7;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}

@@ -1,15 +1,25 @@
 {%  extends 'base.html' %}
-
+{% block title %}profile{% endblock title %}
 {% block content %}
+    <div class="row ad-detail mb-3">
+        <div class="col-md-4 labels">
+            <p>Username:</p>
+            <p>Phone number:</p>
 
-    <div class="card border-warning w-100 mt-5 mb-3" style="max-width: 18rem;">
-        <div class="card-header bg-transparent ">Profile {{ user_obj }}</div>
-    {% if perms.change_profile or request.user == user_obj %}
-        <a class="btn-sm btn btn-outline-warning mt-3" href="{% url 'accounts:update' user_obj.profile.id %}">update</a>
-    {% endif %}
+        </div>
+        <div class="col-md-8 ">
+            <p>{{ user_obj.username }}</p>
+            {% if user_obj.profile %}
+                <p>{{ user_obj.profile.phone_number }}<a class="ms-3 edit-icon" href="{% url 'accounts:update' user_obj.profile.id %}"><i class="far fa-edit"></i></a> update</p>
+            {% endif %}
+        </div>
     </div>
-<h2>{{ user_obj }}'s Ads/announcements: </h2>
-    {% include 'partial/advert_list.html' %}
-    {% include 'partial/paginate.html' %}
-
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <h2 class="text-center">{% if request.user == user_obj %}Your {% else %}{{ user_obj }}'s {% endif %}Ads/announcements: </h2>
+            {% include 'partial/advert_list.html' %}
+            {% include 'partial/paginate.html' %}
+        </div>
+    </div>
 {% endblock content %}
