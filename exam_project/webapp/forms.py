@@ -8,7 +8,7 @@ class AdvertForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AdvertForm, self).__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control', 'style': 'width: 300px;'})
+            self.fields[field].widget.attrs.update({'class': 'form-control', 'style': 'width: 300px; margin-top: 0'})
 
     class Meta:
         model = Advert
@@ -21,4 +21,4 @@ class SearchForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control', 'style': 'width: 300px;'})
+            self.fields[field].widget.attrs.update({'class': 'search-input', 'placeholder': 'search'})
