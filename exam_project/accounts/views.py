@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.views.generic import DetailView, UpdateView
 from django.views.generic.list import MultipleObjectMixin
@@ -29,7 +30,6 @@ class UserDetailView(DetailView, MultipleObjectMixin):
         return context
 
 
-
 class PhoneNumberUpdateView(PermissionRequiredMixin, UpdateView):
     model = Profile
     template_name = 'registration/update_profile.html'
@@ -38,9 +38,10 @@ class PhoneNumberUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'account.change_profile'
 
     def has_permission(self):
-        return self.get_object().user == self.request.user
+        return self.get_object().user == self.request.user or super().has_permission()
 
     def get_success_url(self):
-        return reverse('accounts:profile', kwargs={'pk': self.kwargs.get('pk')})
+        user_obj = User.objects.get(profile__id=self.kwargs.get('pk'))
+        return reverse('accounts:profile', kwargs={'pk': user_obj.id})
 
 # Create your views here.

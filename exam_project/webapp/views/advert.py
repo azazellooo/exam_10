@@ -10,7 +10,6 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from webapp.forms import AdvertForm, SearchForm
 from webapp.models import Advert
 
-today = date.today()
 
 
 class ModeratedAdvertListView(ListView):
@@ -106,6 +105,7 @@ class AdvertUpdateView(PermissionRequiredMixin, UpdateView):
     def form_valid(self, form):
         advert = form.save(commit=False)
         advert.is_moderated = False
+        advert.is_rejected = False
         advert.save()
         return redirect(self.get_success_url())
 
@@ -154,6 +154,8 @@ def approve_ad(request, *args, **kwargs):
     if request.is_ajax and request.method == "POST":
         ad = get_object_or_404(Advert, pk=list(dict(request.POST).keys())[0])
         ad.is_moderated = True
+        ad.is_rejected = False
+        today = date.today()
         ad.published_at = today
         ad.save()
         return JsonResponse({'message': 'ad is successfully moderated! :) '}, status=200)
