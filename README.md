@@ -1,4 +1,5 @@
 # Adverts and announcements
+(heroku link: http://quickadsapp.herokuapp.com/)
 
 Для запуска проекта установите python версии 3.7 и выше, pip и virualenv
 
